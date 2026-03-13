@@ -1,5 +1,5 @@
 import {
-  LayoutDashboard, FolderKanban, FileText, TrendingUp, Code2,
+  LayoutDashboard, CheckSquare, FolderKanban, FileText, TrendingUp, Code2,
   Wrench, Warehouse, Users, DollarSign, Archive,
   Calendar, Megaphone, Headphones, Target
 } from "lucide-react";
@@ -12,6 +12,7 @@ import {
 
 const navItems = [
   { title: "Executive Dashboard", url: "/", icon: LayoutDashboard },
+  { title: "Task Management", url: "/tasks", icon: CheckSquare },
   { title: "Projects", url: "/projects", icon: FolderKanban },
   { title: "Bid & RFP Management", url: "/bids", icon: FileText },
   { title: "Sales Operations", url: "/sales", icon: TrendingUp },
