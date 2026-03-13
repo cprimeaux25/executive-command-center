@@ -24,6 +24,7 @@ import {
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { format, parseISO, startOfMonth, endOfMonth, eachDayOfInterval, getDay, isSameMonth, isToday, isBefore } from "date-fns";
 import { cn } from "@/lib/utils";
+import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
 
 const STATUSES = ['Backlog', 'To Do', 'In Progress', 'In Review', 'Done'] as const;
 const PRIORITIES = ['Critical', 'High', 'Medium', 'Low'] as const;
