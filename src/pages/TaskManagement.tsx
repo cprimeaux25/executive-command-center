@@ -65,7 +65,17 @@ export default function TaskManagement() {
   const [filterPriority, setFilterPriority] = useState<string>("all");
   const [filterAssignee, setFilterAssignee] = useState<string>("all");
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-  const [calendarMonth, setCalendarMonth] = useState(new Date(2026, 2, 1)); // March 2026
+  const [calendarMonth, setCalendarMonth] = useState(new Date(2026, 2, 1));
+  const [taskList, setTaskList] = useState<Task[]>(tasks);
+
+  const handleDragEnd = useCallback((result: DropResult) => {
+    const { destination, draggableId } = result;
+    if (!destination) return;
+    const newStatus = destination.droppableId as Task["status"];
+    setTaskList(prev =>
+      prev.map(t => (t.id === draggableId ? { ...t, status: newStatus } : t))
+    );
+  }, []);
 
   const assignees = useMemo(() => [...new Set(tasks.map(t => t.assignee))].sort(), []);
 
