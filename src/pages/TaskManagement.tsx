@@ -153,7 +153,7 @@ export default function TaskManagement() {
       </Card>
 
       {/* Views */}
-      {view === "board" && <BoardView tasks={filtered} onSelect={setSelectedTask} />}
+      {view === "board" && <BoardView tasks={filtered} onSelect={setSelectedTask} onDragEnd={handleDragEnd} />}
       {view === "list" && <ListView tasks={filtered} onSelect={setSelectedTask} />}
       {view === "calendar" && <CalendarView tasks={filtered} onSelect={setSelectedTask} month={calendarMonth} setMonth={setCalendarMonth} />}
 
