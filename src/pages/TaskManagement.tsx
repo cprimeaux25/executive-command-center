@@ -94,8 +94,8 @@ export default function TaskManagement() {
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard title="Total Tasks" value={tasks.length} icon={CheckCircle2} subtitle="Across all projects" />
-        <KpiCard title="Overdue" value={overdueTasks.length} icon={AlertTriangle} subtitle="Need attention" trend={overdueTasks.length > 0 ? "down" : "up"} />
-        <KpiCard title="Completed" value={completedThisWeek.length} icon={TrendingUp} subtitle="This period" trend="up" />
+        <KpiCard title="Overdue" value={overdueTasks.length} icon={AlertTriangle} subtitle="Need attention" trend={overdueTasks.length > 0 ? { value: `${overdueTasks.length} tasks`, positive: false } : { value: "None", positive: true }} />
+        <KpiCard title="Completed" value={completedThisWeek.length} icon={TrendingUp} subtitle="This period" trend={{ value: `${completedThisWeek.length} done`, positive: true }} />
         <KpiCard title="In Progress" value={inProgressCount} icon={Timer} subtitle="Active work" />
       </div>
 
