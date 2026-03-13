@@ -211,55 +211,83 @@ export default function TaskManagement() {
 /* ─── Board View ─── */
 function BoardView({ tasks, onSelect }: { tasks: Task[]; onSelect: (t: Task) => void }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-      {STATUSES.map(status => {
-        const col = tasks.filter(t => t.status === status);
-        return (
-          <div key={status} className="space-y-2">
-            <div className="flex items-center justify-between px-1">
-              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{status}</h3>
-              <Badge variant="secondary" className="text-[10px] h-5">{col.length}</Badge>
-            </div>
-            <div className="space-y-2 min-h-[200px]">
-              <AnimatePresence>
-                {col.map(task => (
-                  <motion.div key={task.id} layout initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
-                    <Card
-                      className={cn("cursor-pointer border-l-[3px] hover:shadow-md transition-shadow", priorityBorderColor[task.priority])}
-                      onClick={() => onSelect(task)}
-                    >
-                      <CardContent className="p-3 space-y-2">
-                        <p className="text-sm font-medium leading-tight line-clamp-2">{task.title}</p>
-                        <Badge variant="outline" className="text-[10px] h-5 font-normal">{task.project}</Badge>
-                        <div className="flex items-center justify-between text-[11px]">
-                          <div className="flex items-center gap-1.5">
-                            <div className="h-5 w-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-[9px] font-bold">{task.assigneeInitials}</div>
-                            <span className="text-muted-foreground">{format(parseISO(task.dueDate), "MMM d")}</span>
+const statusColumnColors: Record<string, string> = {
+  Backlog: "text-muted-foreground",
+  "To Do": "text-primary",
+  "In Progress": "text-info",
+  "In Review": "text-warning",
+  Done: "text-success",
+};
+
+function BoardView({ tasks, onSelect, onDragEnd }: { tasks: Task[]; onSelect: (t: Task) => void; onDragEnd: (result: DropResult) => void }) {
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+        {STATUSES.map(status => {
+          const col = tasks.filter(t => t.status === status);
+          return (
+            <div key={status} className="space-y-2">
+              <div className="flex items-center justify-between px-1">
+                <h3 className={cn("text-sm font-bold uppercase tracking-wider", statusColumnColors[status])}>{status}</h3>
+                <Badge variant="secondary" className="text-[10px] h-5">{col.length}</Badge>
+              </div>
+              <Droppable droppableId={status}>
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className={cn("space-y-2 min-h-[200px] rounded-lg p-1 transition-colors", snapshot.isDraggingOver && "bg-accent/50")}
+                  >
+                    {col.map((task, index) => (
+                      <Draggable key={task.id} draggableId={task.id} index={index}>
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className={cn(snapshot.isDragging && "opacity-90")}
+                          >
+                            <Card
+                              className={cn("cursor-pointer border-l-[3px] hover:shadow-md transition-shadow", priorityBorderColor[task.priority], snapshot.isDragging && "shadow-lg ring-2 ring-primary/20")}
+                              onClick={() => !snapshot.isDragging && onSelect(task)}
+                            >
+                              <CardContent className="p-3 space-y-2">
+                                <p className="text-sm font-medium leading-tight line-clamp-2">{task.title}</p>
+                                <Badge variant="outline" className="text-[10px] h-5 font-normal">{task.project}</Badge>
+                                <div className="flex items-center justify-between text-[11px]">
+                                  <div className="flex items-center gap-1.5">
+                                    <div className="h-5 w-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-[9px] font-bold">{task.assigneeInitials}</div>
+                                    <span className="text-muted-foreground">{format(parseISO(task.dueDate), "MMM d")}</span>
+                                  </div>
+                                  <div className="flex items-center gap-2 text-muted-foreground">
+                                    {task.subtasks.length > 0 && (
+                                      <span className="flex items-center gap-0.5">
+                                        <CheckCircle2 className="h-3 w-3" />
+                                        {task.subtasks.filter(s => s.completed).length}/{task.subtasks.length}
+                                      </span>
+                                    )}
+                                    {task.comments.length > 0 && (
+                                      <span className="flex items-center gap-0.5">
+                                        <MessageSquare className="h-3 w-3" />{task.comments.length}
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                              </CardContent>
+                            </Card>
                           </div>
-                          <div className="flex items-center gap-2 text-muted-foreground">
-                            {task.subtasks.length > 0 && (
-                              <span className="flex items-center gap-0.5">
-                                <CheckCircle2 className="h-3 w-3" />
-                                {task.subtasks.filter(s => s.completed).length}/{task.subtasks.length}
-                              </span>
-                            )}
-                            {task.comments.length > 0 && (
-                              <span className="flex items-center gap-0.5">
-                                <MessageSquare className="h-3 w-3" />{task.comments.length}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
             </div>
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
+    </DragDropContext>
   );
 }
 
