@@ -209,8 +209,6 @@ export default function TaskManagement() {
 }
 
 /* ─── Board View ─── */
-function BoardView({ tasks, onSelect }: { tasks: Task[]; onSelect: (t: Task) => void }) {
-  return (
 const statusColumnColors: Record<string, string> = {
   Backlog: "text-muted-foreground",
   "To Do": "text-primary",
