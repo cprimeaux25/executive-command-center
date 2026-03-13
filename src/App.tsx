@@ -18,6 +18,7 @@ import Meetings from "./pages/Meetings";
 import Marketing from "./pages/Marketing";
 import ITSupport from "./pages/ITSupport";
 import StrategicPlanning from "./pages/StrategicPlanning";
+import TaskManagement from "./pages/TaskManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
