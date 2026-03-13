@@ -89,21 +89,13 @@ export default function TaskManagement() {
     });
   }, [searchQuery, filterStatus, filterPriority, filterAssignee, taskList]);
 
+  const now = new Date("2026-03-07");
   const overdueTasks = taskList.filter(t => t.status !== "Done" && isBefore(parseISO(t.dueDate), now));
   const completedThisWeek = taskList.filter(t => t.status === "Done");
   const inProgressCount = taskList.filter(t => t.status === "In Progress").length;
 
   const statusData = STATUSES.map(s => ({ name: s, value: taskList.filter(t => t.status === s).length }));
   const priorityData = PRIORITIES.map(p => ({ name: p, value: taskList.filter(t => t.priority === p).length }));
-
-  const now = new Date("2026-03-07");
-  const overdueTasks = tasks.filter(t => t.status !== "Done" && isBefore(parseISO(t.dueDate), now));
-  const completedThisWeek = tasks.filter(t => t.status === "Done");
-  const inProgressCount = tasks.filter(t => t.status === "In Progress").length;
-
-  // Chart data
-  const statusData = STATUSES.map(s => ({ name: s, value: tasks.filter(t => t.status === s).length }));
-  const priorityData = PRIORITIES.map(p => ({ name: p, value: tasks.filter(t => t.priority === p).length }));
 
   return (
     <div className="space-y-6">
