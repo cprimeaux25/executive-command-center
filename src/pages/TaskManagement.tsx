@@ -77,17 +77,24 @@ export default function TaskManagement() {
     );
   }, []);
 
-  const assignees = useMemo(() => [...new Set(tasks.map(t => t.assignee))].sort(), []);
+  const assignees = useMemo(() => [...new Set(taskList.map(t => t.assignee))].sort(), [taskList]);
 
   const filtered = useMemo(() => {
-    return tasks.filter(t => {
+    return taskList.filter(t => {
       if (searchQuery && !t.title.toLowerCase().includes(searchQuery.toLowerCase()) && !t.project.toLowerCase().includes(searchQuery.toLowerCase())) return false;
       if (filterStatus !== "all" && t.status !== filterStatus) return false;
       if (filterPriority !== "all" && t.priority !== filterPriority) return false;
       if (filterAssignee !== "all" && t.assignee !== filterAssignee) return false;
       return true;
     });
-  }, [searchQuery, filterStatus, filterPriority, filterAssignee]);
+  }, [searchQuery, filterStatus, filterPriority, filterAssignee, taskList]);
+
+  const overdueTasks = taskList.filter(t => t.status !== "Done" && isBefore(parseISO(t.dueDate), now));
+  const completedThisWeek = taskList.filter(t => t.status === "Done");
+  const inProgressCount = taskList.filter(t => t.status === "In Progress").length;
+
+  const statusData = STATUSES.map(s => ({ name: s, value: taskList.filter(t => t.status === s).length }));
+  const priorityData = PRIORITIES.map(p => ({ name: p, value: taskList.filter(t => t.priority === p).length }));
 
   const now = new Date("2026-03-07");
   const overdueTasks = tasks.filter(t => t.status !== "Done" && isBefore(parseISO(t.dueDate), now));
