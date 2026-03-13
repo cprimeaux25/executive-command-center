@@ -23,6 +23,12 @@ const statusColors: Record<string, string> = {
   Current: "bg-success/10 text-success border-success/20",
   "In Review": "bg-warning/10 text-warning border-warning/20",
   Scheduled: "bg-info/10 text-info border-info/20",
+  // Task management statuses
+  Backlog: "bg-muted text-muted-foreground border-border",
+  "To Do": "bg-primary/10 text-primary border-primary/20",
+  Done: "bg-success/10 text-success border-success/20",
+  Overdue: "bg-destructive/10 text-destructive border-destructive/20",
+  Critical: "bg-destructive/10 text-destructive border-destructive/20",
 };
 
 export function StatusBadge({ status, className }: { status: string; className?: string }) {
