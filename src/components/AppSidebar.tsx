@@ -1,5 +1,5 @@
 import {
-  LayoutDashboard, FolderKanban, FileText, TrendingUp, Code2,
+  LayoutDashboard, CheckSquare, FolderKanban, FileText, TrendingUp, Code2,
   Wrench, Warehouse, Users, DollarSign, Archive,
   Calendar, Megaphone, Headphones, Target
 } from "lucide-react";
