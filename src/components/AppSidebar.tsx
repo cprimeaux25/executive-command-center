@@ -90,3 +90,4 @@ export function AppSidebar() {
     </Sidebar>
   );
 }
+{ title: "Inventory Portal", url: "/inventory-portal", icon: Warehouse },

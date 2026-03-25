@@ -69,3 +69,7 @@ const App = () => (
 );
 
 export default App;
+
+import InventoryPortal from "./pages/InventoryPortal";
+
+<Route path="/inventory-portal" element={<InventoryPortal />} />;
