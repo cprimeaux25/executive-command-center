@@ -14,6 +14,247 @@ export type Database = {
   }
   public: {
     Tables: {
+      agent_alerts: {
+        Row: {
+          agent_id: string | null
+          body: string | null
+          channel: string
+          created_at: string
+          delivery_response: string | null
+          delivery_status: string
+          finding_id: string | null
+          id: string
+          recipient: string
+          retry_count: number
+          sent_at: string | null
+          subject: string | null
+        }
+        Insert: {
+          agent_id?: string | null
+          body?: string | null
+          channel: string
+          created_at?: string
+          delivery_response?: string | null
+          delivery_status?: string
+          finding_id?: string | null
+          id?: string
+          recipient: string
+          retry_count?: number
+          sent_at?: string | null
+          subject?: string | null
+        }
+        Update: {
+          agent_id?: string | null
+          body?: string | null
+          channel?: string
+          created_at?: string
+          delivery_response?: string | null
+          delivery_status?: string
+          finding_id?: string | null
+          id?: string
+          recipient?: string
+          retry_count?: number
+          sent_at?: string | null
+          subject?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_alerts_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agent_alerts_finding_id_fkey"
+            columns: ["finding_id"]
+            isOneToOne: false
+            referencedRelation: "agent_findings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      agent_findings: {
+        Row: {
+          acknowledged_at: string | null
+          acknowledged_by: string | null
+          agent_id: string
+          created_at: string
+          dedupe_key: string | null
+          description: string | null
+          deviation_pct: number | null
+          evidence: Json | null
+          finding_type: Database["public"]["Enums"]["finding_type"]
+          id: string
+          last_seen_at: string | null
+          metric_baseline: number | null
+          metric_name: string | null
+          metric_value: number | null
+          occurrence_count: number
+          project_id: string | null
+          recommended_action: string | null
+          resolution_notes: string | null
+          resolved_at: string | null
+          run_id: string | null
+          severity: Database["public"]["Enums"]["finding_severity"]
+          source_record_ids: string[] | null
+          source_table: string | null
+          status: Database["public"]["Enums"]["finding_status"]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          acknowledged_at?: string | null
+          acknowledged_by?: string | null
+          agent_id: string
+          created_at?: string
+          dedupe_key?: string | null
+          description?: string | null
+          deviation_pct?: number | null
+          evidence?: Json | null
+          finding_type: Database["public"]["Enums"]["finding_type"]
+          id?: string
+          last_seen_at?: string | null
+          metric_baseline?: number | null
+          metric_name?: string | null
+          metric_value?: number | null
+          occurrence_count?: number
+          project_id?: string | null
+          recommended_action?: string | null
+          resolution_notes?: string | null
+          resolved_at?: string | null
+          run_id?: string | null
+          severity?: Database["public"]["Enums"]["finding_severity"]
+          source_record_ids?: string[] | null
+          source_table?: string | null
+          status?: Database["public"]["Enums"]["finding_status"]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          acknowledged_at?: string | null
+          acknowledged_by?: string | null
+          agent_id?: string
+          created_at?: string
+          dedupe_key?: string | null
+          description?: string | null
+          deviation_pct?: number | null
+          evidence?: Json | null
+          finding_type?: Database["public"]["Enums"]["finding_type"]
+          id?: string
+          last_seen_at?: string | null
+          metric_baseline?: number | null
+          metric_name?: string | null
+          metric_value?: number | null
+          occurrence_count?: number
+          project_id?: string | null
+          recommended_action?: string | null
+          resolution_notes?: string | null
+          resolved_at?: string | null
+          run_id?: string | null
+          severity?: Database["public"]["Enums"]["finding_severity"]
+          source_record_ids?: string[] | null
+          source_table?: string | null
+          status?: Database["public"]["Enums"]["finding_status"]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_findings_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agent_findings_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agent_findings_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "v_project_field_capture_targets"
+            referencedColumns: ["project_id"]
+          },
+          {
+            foreignKeyName: "agent_findings_run_id_fkey"
+            columns: ["run_id"]
+            isOneToOne: false
+            referencedRelation: "agent_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      agent_runs: {
+        Row: {
+          agent_id: string
+          cost_estimate_usd: number | null
+          created_at: string
+          ended_at: string | null
+          error_message: string | null
+          findings_count: number
+          id: string
+          input_payload: Json | null
+          output_payload: Json | null
+          output_summary: string | null
+          rows_scanned: number | null
+          started_at: string
+          status: Database["public"]["Enums"]["agent_run_status"]
+          tools_called: string[] | null
+          trigger_source: string | null
+          trigger_type: Database["public"]["Enums"]["agent_trigger_type"]
+        }
+        Insert: {
+          agent_id: string
+          cost_estimate_usd?: number | null
+          created_at?: string
+          ended_at?: string | null
+          error_message?: string | null
+          findings_count?: number
+          id?: string
+          input_payload?: Json | null
+          output_payload?: Json | null
+          output_summary?: string | null
+          rows_scanned?: number | null
+          started_at?: string
+          status?: Database["public"]["Enums"]["agent_run_status"]
+          tools_called?: string[] | null
+          trigger_source?: string | null
+          trigger_type?: Database["public"]["Enums"]["agent_trigger_type"]
+        }
+        Update: {
+          agent_id?: string
+          cost_estimate_usd?: number | null
+          created_at?: string
+          ended_at?: string | null
+          error_message?: string | null
+          findings_count?: number
+          id?: string
+          input_payload?: Json | null
+          output_payload?: Json | null
+          output_summary?: string | null
+          rows_scanned?: number | null
+          started_at?: string
+          status?: Database["public"]["Enums"]["agent_run_status"]
+          tools_called?: string[] | null
+          trigger_source?: string | null
+          trigger_type?: Database["public"]["Enums"]["agent_trigger_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_runs_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       agents: {
         Row: {
           category: string | null
@@ -160,6 +401,13 @@ export type Database = {
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "bid_management_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "v_project_field_capture_targets"
+            referencedColumns: ["project_id"]
+          },
         ]
       }
       body_weight_logs: {
@@ -200,8 +448,11 @@ export type Database = {
       budget_items: {
         Row: {
           actual: number | null
+          budget_qty: number | null
+          budget_uom: Database["public"]["Enums"]["uom_type"] | null
           category: string | null
           committed: number | null
+          cost_code_id: string | null
           created_at: string | null
           forecast_eac: number | null
           id: string
@@ -210,8 +461,11 @@ export type Database = {
         }
         Insert: {
           actual?: number | null
+          budget_qty?: number | null
+          budget_uom?: Database["public"]["Enums"]["uom_type"] | null
           category?: string | null
           committed?: number | null
+          cost_code_id?: string | null
           created_at?: string | null
           forecast_eac?: number | null
           id?: string
@@ -220,8 +474,11 @@ export type Database = {
         }
         Update: {
           actual?: number | null
+          budget_qty?: number | null
+          budget_uom?: Database["public"]["Enums"]["uom_type"] | null
           category?: string | null
           committed?: number | null
+          cost_code_id?: string | null
           created_at?: string | null
           forecast_eac?: number | null
           id?: string
@@ -230,11 +487,25 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "budget_items_cost_code_id_fkey"
+            columns: ["cost_code_id"]
+            isOneToOne: false
+            referencedRelation: "cost_codes"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "budget_items_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "budget_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "v_project_field_capture_targets"
+            referencedColumns: ["project_id"]
           },
         ]
       }
@@ -312,6 +583,73 @@ export type Database = {
           },
         ]
       }
+      cost_codes: {
+        Row: {
+          category: string
+          code: string
+          created_at: string
+          default_uom: Database["public"]["Enums"]["uom_type"] | null
+          description: string
+          id: string
+          is_active: boolean
+          notes: string | null
+          parent_code_id: string | null
+          project_id: string | null
+          unit_cost: number | null
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          code: string
+          created_at?: string
+          default_uom?: Database["public"]["Enums"]["uom_type"] | null
+          description: string
+          id?: string
+          is_active?: boolean
+          notes?: string | null
+          parent_code_id?: string | null
+          project_id?: string | null
+          unit_cost?: number | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          code?: string
+          created_at?: string
+          default_uom?: Database["public"]["Enums"]["uom_type"] | null
+          description?: string
+          id?: string
+          is_active?: boolean
+          notes?: string | null
+          parent_code_id?: string | null
+          project_id?: string | null
+          unit_cost?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cost_codes_parent_code_id_fkey"
+            columns: ["parent_code_id"]
+            isOneToOne: false
+            referencedRelation: "cost_codes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cost_codes_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cost_codes_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "v_project_field_capture_targets"
+            referencedColumns: ["project_id"]
+          },
+        ]
+      }
       documents: {
         Row: {
           ai_summary: string | null
@@ -350,6 +688,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documents_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "v_project_field_capture_targets"
+            referencedColumns: ["project_id"]
           },
         ]
       }
@@ -441,6 +786,13 @@ export type Database = {
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "equipment_maintenance_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "v_project_field_capture_targets"
+            referencedColumns: ["project_id"]
+          },
         ]
       }
       equipment_rates: {
@@ -523,6 +875,184 @@ export type Database = {
         }
         Relationships: []
       }
+      field_report_items: {
+        Row: {
+          cost_code_id: string | null
+          created_at: string
+          description: string
+          equipment_id: string | null
+          field_report_id: string
+          id: string
+          item_type: string
+          notes: string | null
+          quantity: number
+          source_rate_id: string | null
+          total_cost: number | null
+          unit_cost: number | null
+          uom: Database["public"]["Enums"]["uom_type"]
+        }
+        Insert: {
+          cost_code_id?: string | null
+          created_at?: string
+          description: string
+          equipment_id?: string | null
+          field_report_id: string
+          id?: string
+          item_type: string
+          notes?: string | null
+          quantity: number
+          source_rate_id?: string | null
+          total_cost?: number | null
+          unit_cost?: number | null
+          uom: Database["public"]["Enums"]["uom_type"]
+        }
+        Update: {
+          cost_code_id?: string | null
+          created_at?: string
+          description?: string
+          equipment_id?: string | null
+          field_report_id?: string
+          id?: string
+          item_type?: string
+          notes?: string | null
+          quantity?: number
+          source_rate_id?: string | null
+          total_cost?: number | null
+          unit_cost?: number | null
+          uom?: Database["public"]["Enums"]["uom_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "field_report_items_cost_code_id_fkey"
+            columns: ["cost_code_id"]
+            isOneToOne: false
+            referencedRelation: "cost_codes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "field_report_items_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "equipment"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "field_report_items_field_report_id_fkey"
+            columns: ["field_report_id"]
+            isOneToOne: false
+            referencedRelation: "field_reports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      field_reports: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          created_at: string
+          crew_size: number | null
+          gps_lat: number | null
+          gps_lng: number | null
+          id: string
+          location: string | null
+          notes: string | null
+          photo_urls: string[] | null
+          project_id: string
+          rejected_reason: string | null
+          report_date: string
+          report_number: string | null
+          reported_by: string | null
+          reported_by_name: string | null
+          shift: string | null
+          signature_url: string | null
+          status: Database["public"]["Enums"]["field_report_status"]
+          submitted_at: string | null
+          temperature_f: number | null
+          total_cost: number
+          total_equipment_cost: number
+          total_labor_cost: number
+          total_labor_hours: number
+          total_material_cost: number
+          updated_at: string
+          weather: string | null
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          crew_size?: number | null
+          gps_lat?: number | null
+          gps_lng?: number | null
+          id?: string
+          location?: string | null
+          notes?: string | null
+          photo_urls?: string[] | null
+          project_id: string
+          rejected_reason?: string | null
+          report_date?: string
+          report_number?: string | null
+          reported_by?: string | null
+          reported_by_name?: string | null
+          shift?: string | null
+          signature_url?: string | null
+          status?: Database["public"]["Enums"]["field_report_status"]
+          submitted_at?: string | null
+          temperature_f?: number | null
+          total_cost?: number
+          total_equipment_cost?: number
+          total_labor_cost?: number
+          total_labor_hours?: number
+          total_material_cost?: number
+          updated_at?: string
+          weather?: string | null
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          crew_size?: number | null
+          gps_lat?: number | null
+          gps_lng?: number | null
+          id?: string
+          location?: string | null
+          notes?: string | null
+          photo_urls?: string[] | null
+          project_id?: string
+          rejected_reason?: string | null
+          report_date?: string
+          report_number?: string | null
+          reported_by?: string | null
+          reported_by_name?: string | null
+          shift?: string | null
+          signature_url?: string | null
+          status?: Database["public"]["Enums"]["field_report_status"]
+          submitted_at?: string | null
+          temperature_f?: number | null
+          total_cost?: number
+          total_equipment_cost?: number
+          total_labor_cost?: number
+          total_labor_hours?: number
+          total_material_cost?: number
+          updated_at?: string
+          weather?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "field_reports_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "field_reports_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "v_project_field_capture_targets"
+            referencedColumns: ["project_id"]
+          },
+        ]
+      }
       group_members: {
         Row: {
           added_at: string
@@ -586,6 +1116,116 @@ export type Database = {
         }
         Relationships: []
       }
+      labor_entries: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          cost_code_id: string | null
+          created_at: string
+          employee_id: string | null
+          employee_name: string
+          entry_date: string
+          exported_at: string | null
+          field_report_id: string | null
+          hourly_rate: number | null
+          hours_overtime: number
+          hours_regular: number
+          id: string
+          labor_category: string | null
+          notes: string | null
+          overtime_cost: number | null
+          overtime_rate: number | null
+          payroll_period: string | null
+          payroll_status: string
+          project_id: string | null
+          regular_cost: number | null
+          total_cost: number | null
+          total_hours: number | null
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          cost_code_id?: string | null
+          created_at?: string
+          employee_id?: string | null
+          employee_name: string
+          entry_date?: string
+          exported_at?: string | null
+          field_report_id?: string | null
+          hourly_rate?: number | null
+          hours_overtime?: number
+          hours_regular?: number
+          id?: string
+          labor_category?: string | null
+          notes?: string | null
+          overtime_cost?: number | null
+          overtime_rate?: number | null
+          payroll_period?: string | null
+          payroll_status?: string
+          project_id?: string | null
+          regular_cost?: number | null
+          total_cost?: number | null
+          total_hours?: number | null
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          cost_code_id?: string | null
+          created_at?: string
+          employee_id?: string | null
+          employee_name?: string
+          entry_date?: string
+          exported_at?: string | null
+          field_report_id?: string | null
+          hourly_rate?: number | null
+          hours_overtime?: number
+          hours_regular?: number
+          id?: string
+          labor_category?: string | null
+          notes?: string | null
+          overtime_cost?: number | null
+          overtime_rate?: number | null
+          payroll_period?: string | null
+          payroll_status?: string
+          project_id?: string | null
+          regular_cost?: number | null
+          total_cost?: number | null
+          total_hours?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "labor_entries_cost_code_id_fkey"
+            columns: ["cost_code_id"]
+            isOneToOne: false
+            referencedRelation: "cost_codes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labor_entries_field_report_id_fkey"
+            columns: ["field_report_id"]
+            isOneToOne: false
+            referencedRelation: "field_reports"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labor_entries_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labor_entries_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "v_project_field_capture_targets"
+            referencedColumns: ["project_id"]
+          },
+        ]
+      }
       labor_rates: {
         Row: {
           created_at: string | null
@@ -624,6 +1264,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "projects"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labor_rates_labor_id_fkey"
+            columns: ["labor_id"]
+            isOneToOne: false
+            referencedRelation: "v_project_field_capture_targets"
+            referencedColumns: ["project_id"]
           },
         ]
       }
@@ -1006,6 +1653,60 @@ export type Database = {
         }
         Relationships: []
       }
+      project_members: {
+        Row: {
+          added_at: string
+          added_by: string | null
+          can_approve_payroll: boolean
+          can_approve_reports: boolean
+          can_close_period: boolean
+          id: string
+          project_id: string
+          project_role: string
+          removed_at: string | null
+          user_id: string
+        }
+        Insert: {
+          added_at?: string
+          added_by?: string | null
+          can_approve_payroll?: boolean
+          can_approve_reports?: boolean
+          can_close_period?: boolean
+          id?: string
+          project_id: string
+          project_role: string
+          removed_at?: string | null
+          user_id: string
+        }
+        Update: {
+          added_at?: string
+          added_by?: string | null
+          can_approve_payroll?: boolean
+          can_approve_reports?: boolean
+          can_close_period?: boolean
+          id?: string
+          project_id?: string
+          project_role?: string
+          removed_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_members_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_members_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "v_project_field_capture_targets"
+            referencedColumns: ["project_id"]
+          },
+        ]
+      }
       project_types: {
         Row: {
           created_at: string | null
@@ -1159,6 +1860,13 @@ export type Database = {
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "resource_management_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "v_project_field_capture_targets"
+            referencedColumns: ["project_id"]
+          },
         ]
       }
       resources: {
@@ -1251,6 +1959,13 @@ export type Database = {
             referencedRelation: "projects"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "tasks_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "v_project_field_capture_targets"
+            referencedColumns: ["project_id"]
+          },
         ]
       }
       user_roles: {
@@ -1338,9 +2053,79 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      v_field_ops_weekly: {
+        Row: {
+          hours_overtime: number | null
+          hours_regular: number | null
+          hours_total: number | null
+          labor_cost: number | null
+          ot_pct: number | null
+          project_id: string | null
+          week_start: string | null
+          workers: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "labor_entries_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "labor_entries_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "v_project_field_capture_targets"
+            referencedColumns: ["project_id"]
+          },
+        ]
+      }
+      v_project_field_capture_targets: {
+        Row: {
+          actual_total: number | null
+          budget_total: number | null
+          budgeted_lines: number | null
+          description: string | null
+          last_report_date: string | null
+          project_id: string | null
+          project_name: string | null
+          report_count: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      current_user_can_access_project: {
+        Args: { _project_id: string }
+        Returns: boolean
+      }
+      current_user_can_approve_payroll: { Args: never; Returns: boolean }
+      current_user_can_approve_reports: {
+        Args: { _project_id: string }
+        Returns: boolean
+      }
+      current_user_has_any_role: {
+        Args: { _roles: string[] }
+        Returns: boolean
+      }
+      current_user_is_admin: { Args: never; Returns: boolean }
+      detect_budget_overruns: {
+        Args: { p_threshold_pct?: number }
+        Returns: Json
+      }
+      detect_missing_cost_codes: { Args: never; Returns: Json }
+      detect_overtime_spikes: {
+        Args: { p_ot_threshold_pct?: number; p_window_days?: number }
+        Returns: Json
+      }
+      detect_pending_approvals: { Args: { p_days?: number }; Returns: Json }
+      detect_productivity_anomalies: {
+        Args: { p_window_days?: number; p_zscore_threshold?: number }
+        Returns: Json
+      }
+      detect_schedule_slippage: { Args: never; Returns: Json }
+      detect_stale_drafts: { Args: { p_days?: number }; Returns: Json }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -1350,9 +2135,102 @@ export type Database = {
       }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
       is_coach_or_admin: { Args: { _user_id: string }; Returns: boolean }
+      is_service_role: { Args: never; Returns: boolean }
+      rollup_field_report_totals: {
+        Args: { p_field_report_id: string }
+        Returns: undefined
+      }
+      run_field_ops_analysis: {
+        Args: { p_trigger?: string; p_window_days?: number }
+        Returns: Json
+      }
+      submit_field_report: {
+        Args: {
+          p_crew_size: number
+          p_gps_lat: number
+          p_gps_lng: number
+          p_items: Json
+          p_labor: Json
+          p_location: string
+          p_notes: string
+          p_photo_urls: string[]
+          p_project_id: string
+          p_report_date: string
+          p_reported_by_name: string
+          p_shift: string
+          p_signature_url: string
+          p_submit: boolean
+          p_temperature_f: number
+          p_weather: string
+        }
+        Returns: Json
+      }
     }
     Enums: {
-      app_role: "admin" | "moderator" | "user"
+      agent_run_status:
+        | "queued"
+        | "running"
+        | "success"
+        | "failed"
+        | "partial"
+        | "cancelled"
+      agent_trigger_type: "scheduled" | "realtime" | "manual" | "webhook"
+      app_role:
+        | "admin"
+        | "moderator"
+        | "user"
+        | "project_manager"
+        | "timekeeper"
+        | "accountant"
+        | "foreman"
+        | "crew_lead"
+        | "viewer"
+      field_report_status:
+        | "draft"
+        | "submitted"
+        | "approved"
+        | "rejected"
+        | "archived"
+      finding_severity: "info" | "low" | "medium" | "high" | "critical"
+      finding_status:
+        | "new"
+        | "acknowledged"
+        | "in_progress"
+        | "resolved"
+        | "dismissed"
+      finding_type:
+        | "anomaly"
+        | "trend"
+        | "forecast"
+        | "insight"
+        | "alert"
+        | "recommendation"
+      uom_type:
+        | "feet"
+        | "square_feet"
+        | "cubic_feet"
+        | "cubic_yards"
+        | "inch"
+        | "square_inch"
+        | "meter"
+        | "square_meter"
+        | "cubic_meter"
+        | "ton"
+        | "lb"
+        | "kg"
+        | "gallon"
+        | "liter"
+        | "truck_load"
+        | "load"
+        | "ea"
+        | "pair"
+        | "set"
+        | "hour"
+        | "day"
+        | "week"
+        | "month"
+        | "lump_sum"
+        | "pct"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1480,7 +2358,76 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "moderator", "user"],
+      agent_run_status: [
+        "queued",
+        "running",
+        "success",
+        "failed",
+        "partial",
+        "cancelled",
+      ],
+      agent_trigger_type: ["scheduled", "realtime", "manual", "webhook"],
+      app_role: [
+        "admin",
+        "moderator",
+        "user",
+        "project_manager",
+        "timekeeper",
+        "accountant",
+        "foreman",
+        "crew_lead",
+        "viewer",
+      ],
+      field_report_status: [
+        "draft",
+        "submitted",
+        "approved",
+        "rejected",
+        "archived",
+      ],
+      finding_severity: ["info", "low", "medium", "high", "critical"],
+      finding_status: [
+        "new",
+        "acknowledged",
+        "in_progress",
+        "resolved",
+        "dismissed",
+      ],
+      finding_type: [
+        "anomaly",
+        "trend",
+        "forecast",
+        "insight",
+        "alert",
+        "recommendation",
+      ],
+      uom_type: [
+        "feet",
+        "square_feet",
+        "cubic_feet",
+        "cubic_yards",
+        "inch",
+        "square_inch",
+        "meter",
+        "square_meter",
+        "cubic_meter",
+        "ton",
+        "lb",
+        "kg",
+        "gallon",
+        "liter",
+        "truck_load",
+        "load",
+        "ea",
+        "pair",
+        "set",
+        "hour",
+        "day",
+        "week",
+        "month",
+        "lump_sum",
+        "pct",
+      ],
     },
   },
 } as const
