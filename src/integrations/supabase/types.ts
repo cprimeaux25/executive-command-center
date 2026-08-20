@@ -350,6 +350,153 @@ export type Database = {
         }
         Relationships: []
       }
+      atlas_conversations: {
+        Row: {
+          created_at: string
+          id: string
+          messages: Json
+          owner_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          messages?: Json
+          owner_id: string
+          title?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          messages?: Json
+          owner_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      atlas_events: {
+        Row: {
+          calendar: string
+          created_at: string
+          ends_at: string
+          external_id: string | null
+          id: string
+          location: string | null
+          notes: string | null
+          owner_id: string
+          starts_at: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          calendar?: string
+          created_at?: string
+          ends_at: string
+          external_id?: string | null
+          id?: string
+          location?: string | null
+          notes?: string | null
+          owner_id: string
+          starts_at: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          calendar?: string
+          created_at?: string
+          ends_at?: string
+          external_id?: string | null
+          id?: string
+          location?: string | null
+          notes?: string | null
+          owner_id?: string
+          starts_at?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      atlas_notes: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          owner_id: string
+          source: string
+          tags: string[]
+          title: string
+          transcript: string | null
+          updated_at: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          owner_id: string
+          source?: string
+          tags?: string[]
+          title: string
+          transcript?: string | null
+          updated_at?: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          owner_id?: string
+          source?: string
+          tags?: string[]
+          title?: string
+          transcript?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      atlas_tasks: {
+        Row: {
+          created_at: string
+          due: string | null
+          id: string
+          notes: string | null
+          owner_id: string
+          priority: string
+          source: string
+          status: string
+          tags: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          due?: string | null
+          id?: string
+          notes?: string | null
+          owner_id: string
+          priority?: string
+          source?: string
+          status?: string
+          tags?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          due?: string | null
+          id?: string
+          notes?: string | null
+          owner_id?: string
+          priority?: string
+          source?: string
+          status?: string
+          tags?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       bid_management: {
         Row: {
           bid_date: string | null
@@ -1470,6 +1617,108 @@ export type Database = {
           },
         ]
       }
+      otter_connections: {
+        Row: {
+          auto_sync: boolean
+          created_at: string
+          id: string
+          last_event_at: string | null
+          last_synced_at: string | null
+          otter_email: string | null
+          owner_id: string
+          updated_at: string
+          webhook_secret: string
+        }
+        Insert: {
+          auto_sync?: boolean
+          created_at?: string
+          id?: string
+          last_event_at?: string | null
+          last_synced_at?: string | null
+          otter_email?: string | null
+          owner_id: string
+          updated_at?: string
+          webhook_secret: string
+        }
+        Update: {
+          auto_sync?: boolean
+          created_at?: string
+          id?: string
+          last_event_at?: string | null
+          last_synced_at?: string | null
+          otter_email?: string | null
+          owner_id?: string
+          updated_at?: string
+          webhook_secret?: string
+        }
+        Relationships: []
+      }
+      otter_meetings: {
+        Row: {
+          action_items: Json
+          audio_url: string | null
+          created_at: string
+          duration_seconds: number | null
+          folder: string | null
+          id: string
+          keywords: Json
+          otter_id: string
+          overview: string | null
+          owner_id: string
+          raw: Json
+          share_url: string | null
+          speakers: Json
+          started_at: string | null
+          summary: string | null
+          synced_at: string
+          title: string
+          transcript: string | null
+          updated_at: string
+        }
+        Insert: {
+          action_items?: Json
+          audio_url?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          folder?: string | null
+          id?: string
+          keywords?: Json
+          otter_id: string
+          overview?: string | null
+          owner_id: string
+          raw?: Json
+          share_url?: string | null
+          speakers?: Json
+          started_at?: string | null
+          summary?: string | null
+          synced_at?: string
+          title?: string
+          transcript?: string | null
+          updated_at?: string
+        }
+        Update: {
+          action_items?: Json
+          audio_url?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          folder?: string | null
+          id?: string
+          keywords?: Json
+          otter_id?: string
+          overview?: string | null
+          owner_id?: string
+          raw?: Json
+          share_url?: string | null
+          speakers?: Json
+          started_at?: string | null
+          summary?: string | null
+          synced_at?: string
+          title?: string
+          transcript?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       posts: {
         Row: {
           author_id: string
@@ -2048,6 +2297,86 @@ export type Database = {
           new_column?: string | null
           steps?: Json | null
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      workspace_items: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          kind: string
+          metadata: Json
+          owner_id: string
+          source: string
+          title: string
+          updated_at: string
+          workspace_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind: string
+          metadata?: Json
+          owner_id: string
+          source?: string
+          title: string
+          updated_at?: string
+          workspace_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          metadata?: Json
+          owner_id?: string
+          source?: string
+          title?: string
+          updated_at?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_items_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspaces: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          owner_id: string
+          slug: string
+          summary: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind?: string
+          owner_id: string
+          slug: string
+          summary?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          owner_id?: string
+          slug?: string
+          summary?: string | null
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }
