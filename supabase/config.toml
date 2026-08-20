@@ -1,1 +1,4 @@
 project_id = "xawbxbsclsxiqjfggybf"
+
+[functions.invite-portal-admin]
+verify_jwt = false
