@@ -1,6 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const ADMIN_EMAIL = "cprimeaux@etec-services.com";
+const LEGACY_ADMIN_EMAIL = "cprimeaux@prime-proservices.com";
 
 Deno.serve(async (request) => {
   if (request.method !== "POST") {
@@ -18,13 +19,23 @@ Deno.serve(async (request) => {
     auth: { autoRefreshToken: false, persistSession: false },
   });
 
-  const { data, error } = await admin.auth.admin.inviteUserByEmail(ADMIN_EMAIL, {
-    data: { full_name: "Christian Primeaux" },
-    redirectTo: `${request.headers.get("origin") ?? "https://id-preview--bcc250d7-e6ac-44ff-8e94-b188bca38223.lovable.app"}/reset-password`,
+  const { data: usersData, error: usersError } = await admin.auth.admin.listUsers();
+  const existingUser = usersData?.users.find(
+    (user) => user.email?.toLowerCase() === ADMIN_EMAIL || user.email?.toLowerCase() === LEGACY_ADMIN_EMAIL,
+  );
+
+  if (usersError || !existingUser) {
+    return Response.json({ error: usersError?.message ?? "Existing administrator account was not found." }, { status: 404 });
+  }
+
+  const { data, error } = await admin.auth.admin.updateUserById(existingUser.id, {
+    email: ADMIN_EMAIL,
+    email_confirm: true,
+    user_metadata: { ...existingUser.user_metadata, full_name: "Christian Primeaux" },
   });
 
   if (error || !data.user) {
-    return Response.json({ error: error?.message ?? "Account invitation failed." }, { status: 400 });
+    return Response.json({ error: error?.message ?? "Account update failed." }, { status: 400 });
   }
 
   const userId = data.user.id;
@@ -42,11 +53,17 @@ Deno.serve(async (request) => {
   );
 
   if (profileError || roleError) {
-    await admin.auth.admin.deleteUser(userId);
     return Response.json(
       { error: profileError?.message ?? roleError?.message ?? "Admin access setup failed." },
       { status: 500 },
     );
+  }
+
+  const redirectTo = `${request.headers.get("origin") ?? "https://id-preview--bcc250d7-e6ac-44ff-8e94-b188bca38223.lovable.app"}/reset-password`;
+  const { error: resetError } = await admin.auth.resetPasswordForEmail(ADMIN_EMAIL, { redirectTo });
+
+  if (resetError) {
+    return Response.json({ error: resetError.message }, { status: 400 });
   }
 
   return Response.json({ success: true });
