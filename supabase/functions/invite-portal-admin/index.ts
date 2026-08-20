@@ -8,6 +8,12 @@ Deno.serve(async (request) => {
     return new Response("Method not allowed", { status: 405 });
   }
 
+  const authorization = request.headers.get("authorization");
+  const publishableKey = Deno.env.get("SUPABASE_ANON_KEY");
+  if (!publishableKey || authorization !== `Bearer ${publishableKey}`) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
